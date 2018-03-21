@@ -1,9 +1,10 @@
 #! usr/bin/env python3
 import time			# To get time for stuff
-#import Adafruit_ADS1x115 	# Library for ADS1115 ADC module
+#import Adafruit_ADS1x115 	# Library for ADS1115 ADC module github.com/adafruit/Adafruit_PythonADS1x15
 # variables
 repeatLoop = 1
 ticks = 0
+NumSensorsInUse = 8		# Number of sensors in use
 
 # This determines if the sensor is used or not
 SensorUse = [1,1,1,1,0,0,0,0]
@@ -12,7 +13,7 @@ SensorUse = [1,1,1,1,0,0,0,0]
 SensorType = ['MAP', 'TEMP', 'MAP', 'TEMP', 'NIL', 'NIL', 'NIL', 'NIL']
 
 # Stores the read value of the sensor
-SensorVal = []
+SensorVal = [0,0,0,0,0,0,0,0]
 
 # Sensor Types
 """
@@ -40,22 +41,29 @@ GAIN = 1
 # sensor setup
 
 
-# Start the ADC
-#adc.start_adc(0, gain=GAIN)
 
 # Main program loop
 while repeatLoop == 1:
 
 	# program code goes here
-	print ("Loop number: " + str(cnt) ) 
+	print ("Loop number: " + str(ticks) ) 
+
+	# Read sensors
+	for i in range(NumSensorsInUse):
+		#SensorVal[i] = adc.read_adc(i, gain=GAIN)
+		# For DEBUG
+		#print("i is " + str(i))
+		SensorVal[i] = (i + 69)
+		#print('SensorVal[{}] is {}'.format(str(i), str(SensorVal[i])))
+
+	print('Sensor:  1  |   2  |   3  |   4  |   5  |   6  |   7  |')
+	print('Value:  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |'.format(str(SensorVal[0]),str(SensorVal[1]), str(SensorVal[2]), str(SensorVal[3]), str(SensorVal[4]), str(SensorVal[5]), str(SensorVal[6]), str(SensorVal[7])))
 
 	# Loop Breaker
-	if ticks >= 10:
+	if ticks >= 1000:
 		break		
 
-	cnt += 1
+	ticks += 1
 
-# stop the ADC
-#adc.stop_adc()
 
 print ("End Program")
